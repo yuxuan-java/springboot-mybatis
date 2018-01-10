@@ -2,12 +2,14 @@ package org.spring.springboot.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spring.springboot.base.BaseResult;
 import org.spring.springboot.dao.CityMapper;
 import org.spring.springboot.domain.City;
 import org.spring.springboot.service.CityService;
 import org.spring.springboot.service.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static org.spring.springboot.base.BaseResult.*;
 
 /**
  * 城市业务逻辑实现类
@@ -23,6 +25,7 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private IRedisService redisService;
     
+    @SuppressWarnings("all")
     private static final Logger logger = LoggerFactory.getLogger(CityServiceImpl.class);
 
     public City findCityByName(String cityName) {
@@ -31,28 +34,27 @@ public class CityServiceImpl implements CityService {
     }
 
 	@Override
-	public void addCity(City city) {
+	public BaseResult addCity(City city) {
 		cityDao.save(city);
+		return success();
 	}
 
 	@Override
 	public City findCityById(String id) {
-		City city = null;
-		try {
-			city = redisService.getCityById(id);
-		} catch (Exception e) {
-			logger.error("######redisService.getCityById", e);
-		}
+		City city = redisService.getCityById(id);
 		
 		if (city == null) {
-			city = cityDao.findById(id);
-			try {
-				redisService.setCity(city);
-			} catch (Exception e) {
-				logger.error("######redisService.setCity", e);
-			}
+			city = cityDao.selectByPrimaryKey(id);
+			redisService.setCity(city);
 		}
 		return city;
+	}
+
+	@Override
+	public BaseResult updateCity(City city) {
+		cityDao.updateByPrimaryKey(city);
+		redisService.deleteByKey(String.valueOf(city.getId()));
+		return success();
 	}
 
 }

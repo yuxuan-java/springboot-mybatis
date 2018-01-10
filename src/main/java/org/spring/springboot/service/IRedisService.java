@@ -12,13 +12,19 @@ public interface IRedisService {
 	 * @return
 	 * @throws Exception 
 	 */
-	City getCityById(String id) throws Exception;
+	City getCityById(String id);
 	
 	/**
 	 * 添加缓存
 	 * @param city
 	 * @throws Exception 
 	 */
-	void setCity(City city) throws Exception;
+	void setCity(City city);
+	
+	/**
+	 * 删除缓存
+	 * @param city
+	 */
+	void deleteByKey(String key);
 
 }

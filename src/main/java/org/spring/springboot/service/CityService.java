@@ -1,5 +1,6 @@
 package org.spring.springboot.service;
 
+import org.spring.springboot.base.BaseResult;
 import org.spring.springboot.domain.City;
 
 /**
@@ -18,8 +19,9 @@ public interface CityService {
     /**
      * 添加城市
      * @param city
+     * @return 
      */
-	void addCity(City city);
+	BaseResult addCity(City city);
 	
 	/**
 	 * 根据Id查询
@@ -27,4 +29,11 @@ public interface CityService {
 	 * @return
 	 */
 	City findCityById(String id);
+	
+	/**
+	 * 更新城市信息
+	 * @param city
+	 * @return
+	 */
+	BaseResult updateCity(City city);
 }

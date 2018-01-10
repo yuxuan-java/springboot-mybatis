@@ -30,21 +30,34 @@ public class RedisServiceImpl implements IRedisService{
 	}
 
 	@Override
-	public City getCityById(String id) throws Exception {
+	public City getCityById(String id) {
 		String json = redisTemplate.opsForValue().get(id);
 		if (isNotEmpty(json)) {
-			logger.debug("######get city from redis: {}", json);
-			City city = JacksonUtil.getInstance().json2Model(json, City.class);
-			return city;
+			try {
+				City city = JacksonUtil.getInstance().json2Model(json, City.class);
+				logger.debug("######get city from redis: {}", json);
+				return city;
+			} catch (Exception e) {
+				logger.error("######RedisServiceImpl json2Model error: ", e);
+			}
 		}
 		return null;
 	}
 
 	@Override
-	public void setCity(City city) throws Exception {
-		String json = JacksonUtil.getInstance().object2Json(city);
-		logger.debug("######set city to redis: {}", json);
-		redisTemplate.opsForValue().set(city.getId().toString(), json);
+	public void setCity(City city) {
+		try {
+			String json = JacksonUtil.getInstance().object2Json(city);
+			logger.debug("######set city to redis: {}", json);
+			redisTemplate.opsForValue().set(city.getId().toString(), json);
+		} catch (Exception e) {
+			logger.error("######RedisServiceImpl object2Json error: ", e);
+		}
+	}
+
+	@Override
+	public void deleteByKey(String key) {
+		redisTemplate.delete(key);
 	}
 	
 }

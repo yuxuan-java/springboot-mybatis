@@ -28,5 +28,11 @@ public interface CityMapper {
 	 * @param id
 	 * @return
 	 */
-	City findById(@Param("id") String id);
+	City selectByPrimaryKey(@Param("id") String id);
+	
+	/**
+	 * 根据主键更新
+	 * @param city
+	 */
+	void updateByPrimaryKey(City city);
 }

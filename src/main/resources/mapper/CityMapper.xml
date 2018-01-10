@@ -27,10 +27,16 @@
 		)
 	</insert>
 	
-	<select id="findById" resultMap="BaseResultMap">
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
 		SELECT <include refid="fields" /> 
 		FROM city 
 		WHERE id = #{id}
 	</select>
+	
+	<update id="updateByPrimaryKey" parameterMap="city">
+		UPDATE city 
+		SET province_id = #{provinceId}, city_name = #{cityName}, description = #{description} 
+		WHERE id = #{id}
+	</update>
 
 </mapper>

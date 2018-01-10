@@ -1,5 +1,6 @@
 package org.spring.springboot.controller;
 
+import org.spring.springboot.base.BaseResult;
 import org.spring.springboot.domain.City;
 import org.spring.springboot.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class CityRestController {
     
     @ApiOperation("添加城市")
     @RequestMapping(value = "/addCity", method = RequestMethod.POST)
-    public String addCity(@ApiParam("") @RequestBody City city) {
-    	cityService.addCity(city);
-    	return "succes";
+    public BaseResult addCity(@ApiParam("") @RequestBody City city) {
+    	BaseResult result = cityService.addCity(city);
+    	return result;
     }
     
     @ApiOperation("根据Id查询")
@@ -48,5 +49,12 @@ public class CityRestController {
     	City city = cityService.findCityById(id);
     	return city;
     }
-
+    
+    @ApiOperation("更新城市信息")
+    @RequestMapping(value = "/updateCity", method = RequestMethod.POST)
+    public BaseResult updateCity(@RequestBody City city) {
+    	BaseResult result = cityService.updateCity(city);
+    	return result;
+    }
+    
 }
