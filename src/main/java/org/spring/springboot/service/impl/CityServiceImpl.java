@@ -1,8 +1,11 @@
 package org.spring.springboot.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spring.springboot.dao.CityMapper;
 import org.spring.springboot.domain.City;
 import org.spring.springboot.service.CityService;
+import org.spring.springboot.service.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,11 @@ public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityMapper cityDao;
+    
+    @Autowired
+    private IRedisService redisService;
+    
+    private static final Logger logger = LoggerFactory.getLogger(CityServiceImpl.class);
 
     public City findCityByName(String cityName) {
     	City city = cityDao.findByName(cityName);
@@ -29,7 +37,21 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public City findCityById(String id) {
-		City city = cityDao.findById(id);
+		City city = null;
+		try {
+			city = redisService.getCityById(id);
+		} catch (Exception e) {
+			logger.error("######redisService.getCityById", e);
+		}
+		
+		if (city == null) {
+			city = cityDao.findById(id);
+			try {
+				redisService.setCity(city);
+			} catch (Exception e) {
+				logger.error("######redisService.setCity", e);
+			}
+		}
 		return city;
 	}
 
