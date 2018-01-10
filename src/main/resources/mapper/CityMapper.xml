@@ -8,7 +8,7 @@
 		<result column="description" property="description" />
 	</resultMap>
 
-	<parameterMap id="City" type="org.spring.springboot.domain.City"/>
+	<parameterMap id="city" type="org.spring.springboot.domain.City"/>
 
 	<sql id="fields">
 		id, province_id, city_name, description
@@ -18,6 +18,19 @@
 		SELECT <include refid="fields" />
 		FROM city
 		WHERE city_name = #{cityName}
+	</select>
+	
+	<insert id="save" parameterMap="city">
+		INSERT INTO city (<include refid="fields" />) 
+		VALUES (
+			#{id}, #{provinceId}, #{cityName}, #{description}
+		)
+	</insert>
+	
+	<select id="findById" resultMap="BaseResultMap">
+		SELECT <include refid="fields" /> 
+		FROM city 
+		WHERE id = #{id}
 	</select>
 
 </mapper>

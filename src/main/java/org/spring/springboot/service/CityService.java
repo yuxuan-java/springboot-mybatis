@@ -14,4 +14,17 @@ public interface CityService {
      * @param cityName
      */
     City findCityByName(String cityName);
+    
+    /**
+     * 添加城市
+     * @param city
+     */
+	void addCity(City city);
+	
+	/**
+	 * 根据Id查询
+	 * @param id
+	 * @return
+	 */
+	City findCityById(String id);
 }

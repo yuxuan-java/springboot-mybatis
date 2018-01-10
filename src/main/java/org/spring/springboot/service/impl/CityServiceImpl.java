@@ -22,4 +22,15 @@ public class CityServiceImpl implements CityService {
         return city;
     }
 
+	@Override
+	public void addCity(City city) {
+		cityDao.save(city);
+	}
+
+	@Override
+	public City findCityById(String id) {
+		City city = cityDao.findById(id);
+		return city;
+	}
+
 }

@@ -16,4 +16,17 @@ public interface CityMapper {
      * @param cityName 城市名
      */
     City findByName(@Param("cityName") String cityName);
+    
+    /**
+     * 添加城市
+     * @param city
+     */
+	void save(City city);
+
+	/**
+	 * 根据ID查询
+	 * @param id
+	 * @return
+	 */
+	City findById(@Param("id") String id);
 }
