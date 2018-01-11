@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Spring Boot 应用启动类
  *
- * Created by bysocket on 16/4/26.
+ * @author yuxuan.han
  */
 // Spring Boot 应用的标识
 @SpringBootApplication
@@ -23,4 +23,5 @@ public class Application {
         // 启动嵌入式的 Tomcat 并初始化 Spring 环境及其各 Spring 组件
         SpringApplication.run(Application.class,args);
     }
+    
 }
