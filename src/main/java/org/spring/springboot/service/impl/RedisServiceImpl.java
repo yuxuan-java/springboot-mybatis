@@ -1,14 +1,19 @@
 package org.spring.springboot.service.impl;
 
+import static org.spring.springboot.util.StringUtil.isNotEmpty;
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spring.springboot.domain.City;
 import org.spring.springboot.service.IRedisService;
 import org.spring.springboot.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import static org.spring.springboot.util.StringUtil.*;
 
 /**
  * redis操作逻辑类
@@ -58,6 +63,29 @@ public class RedisServiceImpl implements IRedisService{
 	@Override
 	public void deleteByKey(String key) {
 		redisTemplate.delete(key);
+	}
+
+	@Override
+	public String getString(String key) {
+		return redisTemplate.opsForValue().get(key);
+	}
+
+	@Override
+	public void setString(String key, String value) {
+		redisTemplate.opsForValue().set(key, value);
+	}
+	
+	@Override
+	public Map<String, String> getHash(String key) {
+		HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
+		Map<String, String> resultMap = opsForHash.entries(key);
+		return resultMap;
+	}
+
+	@Override
+	public void setHash(String key, Map<String, Object> map) {
+		BoundHashOperations<String, String, Object> boundHashOps = redisTemplate.boundHashOps(key);
+		boundHashOps.putAll(map);
 	}
 	
 }

@@ -88,6 +88,12 @@ public class BaseResult implements Serializable{
 		this.msg = msg;
 	}
 
+	private BaseResult(String code, Map<String, Object> data) {
+		super();
+		this.code = code;
+		this.data = data;
+	}
+
 	private BaseResult(String code, String msg, Map<String, Object> data) {
 		super();
 		this.code = code;
@@ -122,8 +128,16 @@ public class BaseResult implements Serializable{
 		return new BaseResult(BaseResultCodeEnum.SUCCESS.getCode(), msg, data);
 	}
 	
+	public static final BaseResult successData(Map<String, Object> data) {
+		return new BaseResult(BaseResultCodeEnum.SUCCESS.getCode(), data);
+	}
+	
 	public static final String successJson() {
 		return success().toJson();
+	}
+	
+	public static final String successDataJson(Map<String, Object> data) {
+		return successData(data).toJson();
 	}
 	
 	public static final String successJson(String msg) {

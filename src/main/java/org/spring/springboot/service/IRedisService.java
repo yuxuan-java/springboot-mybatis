@@ -1,5 +1,7 @@
 package org.spring.springboot.service;
 
+import java.util.Map;
+
 import org.spring.springboot.domain.City;
 
 public interface IRedisService {
@@ -26,5 +28,33 @@ public interface IRedisService {
 	 * @param city
 	 */
 	void deleteByKey(String key);
+	
+	/**
+	 * 获取指定key的String值
+	 * @param key
+	 * @return
+	 */
+	String getString(String key);
+	
+	/**
+	 * 设置指定key的String值
+	 * @param key	key for redis string
+	 * @param value value for redis string
+	 */
+	void setString(String key, String value);
+	
+	/**
+	 * 获取指定key的Hash值
+	 * @param key 
+	 * @return
+	 */
+	Map<String, String> getHash(String key);
+	
+	/**
+	 * 设置redis中Hash结构的值
+	 * @param key
+	 * @param map
+	 */
+	void setHash(String key, Map<String, Object> map);
 
 }
