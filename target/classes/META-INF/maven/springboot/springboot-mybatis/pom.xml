@@ -90,7 +90,20 @@
 		    <artifactId>okhttp</artifactId>
 		    <version>3.4.1</version>
 		</dependency>
-
+		
+		<!-- https://mvnrepository.com/artifact/net.bull.javamelody/javamelody-core -->
+		<!-- <dependency>
+		    <groupId>net.bull.javamelody</groupId>
+		    <artifactId>javamelody-core</artifactId>
+		    <version>1.70.0</version>
+		</dependency> -->
+		
+		<!-- http://localhost/monitoring -->
+		<dependency>
+		    <groupId>net.bull.javamelody</groupId>
+		    <artifactId>javamelody-spring-boot-starter</artifactId>
+		    <version>1.66.0</version>
+		</dependency>
 
     </dependencies>
 </project>
