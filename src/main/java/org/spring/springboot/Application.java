@@ -16,6 +16,7 @@ public class Application {
 	/**
 	 * Application entrance
 	 * http://localhost/swagger-ui.html
+	 * http://localhost/monitoring
 	 * 
 	 * @param args
 	 */
