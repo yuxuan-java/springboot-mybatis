@@ -71,7 +71,7 @@ public class RedisController {
 	@ApiOperation("设置redis中Hash结构的值")
 	@RequestMapping(value = "/setHash", method = RequestMethod.POST)
 	public BaseResult setHash(@ApiParam("key for redis hash") @RequestParam("key") String key, 
-			@ApiParam("entries json for redis hash") @RequestParam("json") String json) {
+			@ApiParam("entry map json for redis hash") @RequestParam("json") String json) {
 		JacksonUtil jackson = JacksonUtil.getInstance();
 		try {
 			Map<String, Object> map = jackson.json2Map(json);
