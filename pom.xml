@@ -104,6 +104,17 @@
 		    <artifactId>javamelody-spring-boot-starter</artifactId>
 		    <version>1.66.0</version>
 		</dependency>
+		
+		<!-- Spring Boot 应用暴露监控指标【版本 1.5.7.RELEASE】 -->
+		<!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_spring_boot</artifactId>
+            <version>0.0.26</version>
+        </dependency> -->
 
     </dependencies>
 </project>

@@ -28,6 +28,7 @@ public class CityServiceImpl implements CityService {
     @SuppressWarnings("all")
     private static final Logger logger = LoggerFactory.getLogger(CityServiceImpl.class);
 
+    @Override
     public City findCityByName(String cityName) {
     	City city = cityDao.findByName(cityName);
         return city;

@@ -29,7 +29,12 @@ public class BaseResult implements Serializable{
 	 * @author yuxuan.han
 	 */
 	public enum BaseResultCodeEnum {
-		SUCCESS("000000", "成功"), FAILURE("111111", "失败"), ERROR("100000", "异常");
+		//	成功
+		SUCCESS("000000", "成功"), 
+		//	业务异常
+		FAILURE("111111", "失败"), 
+		//	系统异常
+		ERROR("100000", "异常");
 		
 		private String code;
 		private String description;
@@ -49,8 +54,9 @@ public class BaseResult implements Serializable{
 		
 		public String getDescription(String code) {
 			for (BaseResultCodeEnum e : values()) {
-				if (e.code.equals(code)) 
+				if (e.code.equals(code)) {
 					return e.description;
+				}
 			}
 			return null;
 		}
@@ -158,6 +164,10 @@ public class BaseResult implements Serializable{
 	
 	public static final BaseResult failure(String msg, Map<String, Object> data) {
 		return new BaseResult(BaseResultCodeEnum.FAILURE.getCode(), msg, data);
+	}
+	
+	public static final BaseResult failure(BusinessException e) {
+		return new BaseResult(BaseResultCodeEnum.FAILURE.getCode(), e.getBusinessMsg());
 	}
 	
 	public static final String failureJson() {

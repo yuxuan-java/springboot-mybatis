@@ -2,6 +2,7 @@ package org.spring.springboot.service;
 
 import java.util.Map;
 
+import org.spring.springboot.base.BusinessException;
 import org.spring.springboot.domain.City;
 
 public interface IRedisService {
@@ -47,6 +48,7 @@ public interface IRedisService {
 	 * 获取指定key的Hash值
 	 * @param key 
 	 * @return
+	 * @throws BusinessException 
 	 */
 	Map<String, String> getHash(String key);
 	
@@ -54,7 +56,8 @@ public interface IRedisService {
 	 * 设置redis中Hash结构的值
 	 * @param key
 	 * @param map
+	 * @throws BusinessException 
 	 */
-	void setHash(String key, Map<String, Object> map);
+	void setHash(String key, Map<String, Object> map) throws BusinessException;
 
 }

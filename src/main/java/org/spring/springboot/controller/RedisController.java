@@ -1,9 +1,12 @@
 package org.spring.springboot.controller;
 
+import static org.spring.springboot.base.BaseResult.success;
+
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spring.springboot.base.BaseController;
 import org.spring.springboot.base.BaseResult;
 import org.spring.springboot.service.IRedisService;
 import org.spring.springboot.util.JacksonUtil;
@@ -19,9 +22,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import static org.spring.springboot.base.BaseResult.success;
-import static org.spring.springboot.base.BaseResult.failure;
-
 /**
  * redis操作控制器
  *
@@ -30,8 +30,9 @@ import static org.spring.springboot.base.BaseResult.failure;
 @Api(value="redis controller", tags = "redis相关操作")
 @RestController
 @RequestMapping("/redis")
-public class RedisController {
+public class RedisController extends BaseController {
 	
+	@SuppressWarnings("all")
 	private static final Logger logger = LoggerFactory.getLogger(RedisController.class);
 	
 	@Autowired
@@ -76,11 +77,10 @@ public class RedisController {
 		try {
 			Map<String, Object> map = jackson.json2Map(json);
 			redisService.setHash(key, map);
+			return success();
 		} catch (Exception e) {
-			logger.error("######setHash error: ", e);
-			return failure();
+			return processException(e);
 		}
-		return success();
 	}
 	
 }

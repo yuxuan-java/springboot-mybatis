@@ -22,6 +22,11 @@ public class BusinessException extends Exception {
 		this.businessMsg = businessMsg;
 	}
 
+	public BusinessException(String businessMsg) {
+		super();
+		this.businessMsg = businessMsg;
+	}
+
 	public String getBusinessCode() {
 		return businessCode;
 	}

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spring.springboot.base.BusinessException;
 import org.spring.springboot.domain.City;
 import org.spring.springboot.service.IRedisService;
 import org.spring.springboot.util.JacksonUtil;
@@ -76,16 +77,17 @@ public class RedisServiceImpl implements IRedisService{
 	}
 	
 	@Override
-	public Map<String, String> getHash(String key) {
+	public Map<String, String> getHash(String key)  {
 		HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
 		Map<String, String> resultMap = opsForHash.entries(key);
 		return resultMap;
 	}
 
 	@Override
-	public void setHash(String key, Map<String, Object> map) {
+	public void setHash(String key, Map<String, Object> map) throws BusinessException {
 		BoundHashOperations<String, String, Object> boundHashOps = redisTemplate.boundHashOps(key);
-		boundHashOps.putAll(map);
+		throw new BusinessException("id不合法");
+//		boundHashOps.putAll(map);
 	}
 	
 }
