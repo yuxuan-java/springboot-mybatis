@@ -6,11 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Spring Boot 应用启动类
- *
+ *		@SpringBootApplication:Spring Boot 应用的标识
+ *		@MapperScan:mapper 接口类扫描包配置
  * @author yuxuan.han
  */
-@SpringBootApplication						// Spring Boot 应用的标识
-@MapperScan("org.spring.springboot.dao")	// mapper 接口类扫描包配置
+@SpringBootApplication
+@MapperScan("org.spring.springboot.dao")
 public class Application {
 	
 	/**

@@ -8,10 +8,8 @@ import okhttp3.OkHttpClient;
  *
  * @author yuxuan.han
  */
-//@Configuration
 public class OkHttpConfig {
 	
-//	@Bean
 	public OkHttpClient okHttpClient() {
 		OkHttpClient.Builder builder = new OkHttpClient.Builder();
 		builder.connectTimeout(30, TimeUnit.SECONDS)
