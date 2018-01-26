@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spring.springboot.enums.BaseResultCodeEnum;
 import org.spring.springboot.util.JacksonUtil;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

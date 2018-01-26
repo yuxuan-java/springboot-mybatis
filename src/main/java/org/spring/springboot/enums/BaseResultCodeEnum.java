@@ -1,4 +1,4 @@
-package org.spring.springboot.base;
+package org.spring.springboot.enums;
 
 import java.util.HashMap;
 import java.util.Map;
