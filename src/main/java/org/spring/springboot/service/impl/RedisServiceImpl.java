@@ -86,8 +86,7 @@ public class RedisServiceImpl implements IRedisService{
 	@Override
 	public void setHash(String key, Map<String, Object> map) throws BusinessException {
 		BoundHashOperations<String, String, Object> boundHashOps = redisTemplate.boundHashOps(key);
-		throw new BusinessException("id不合法");
-//		boundHashOps.putAll(map);
+		boundHashOps.putAll(map);
 	}
 	
 }

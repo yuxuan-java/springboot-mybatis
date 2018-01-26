@@ -4,9 +4,17 @@ import java.util.Map;
 
 import org.spring.springboot.base.BusinessException;
 import org.spring.springboot.domain.City;
-
+/**
+ * Redis操作Service接口
+ *
+ * @author yuxuan.han
+ */
 public interface IRedisService {
 
+	/**
+	 * redis连接的测试接口
+	 * @return
+	 */
 	String getUsername();
 	
 	/**
@@ -26,7 +34,7 @@ public interface IRedisService {
 	
 	/**
 	 * 删除缓存
-	 * @param city
+	 * @param key
 	 */
 	void deleteByKey(String key);
 	

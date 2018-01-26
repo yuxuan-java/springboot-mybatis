@@ -1,19 +1,19 @@
 package org.spring.springboot.base;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spring.springboot.util.JacksonUtil;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 返回结果集封装
  *
  * @author yuxuan.han
  */
-public class BaseResult implements Serializable{
+public class BaseResult<T> implements Serializable{
 
 	/**
 	 * 
@@ -22,62 +22,16 @@ public class BaseResult implements Serializable{
 	
 	private static final Logger logger = LoggerFactory.getLogger(BaseResult.class);
 	
+	@JsonProperty("code")
 	private String code;
-	/**
-	 * 返回状态码枚举类
-	 *
-	 * @author yuxuan.han
-	 */
-	public enum BaseResultCodeEnum {
-		//	成功
-		SUCCESS("000000", "成功"), 
-		//	业务异常
-		FAILURE("111111", "失败"), 
-		//	系统异常
-		ERROR("100000", "异常");
-		
-		private String code;
-		private String description;
-		
-		private BaseResultCodeEnum(String code, String description) {
-			this.code = code;
-			this.description = description;
-		}
-
-		public String getCode() {
-			return code;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-		
-		public String getDescription(String code) {
-			for (BaseResultCodeEnum e : values()) {
-				if (e.code.equals(code)) {
-					return e.description;
-				}
-			}
-			return null;
-		}
-		
-		/**
-		 * @return Map<code, description>
-		 */
-		public static Map<String, String> getMap() {
-			Map<String, String> map = new HashMap<String, String>();
-			for (BaseResultCodeEnum e : values()) {
-				map.put(e.code, e.description);
-			}
-			return map;
-		}
-	}
 	
+	@JsonProperty("msg")
 	private String msg;
 	
-	private Map<String, Object> data;
+	@JsonProperty("data")
+	private T data;
 	
-	public BaseResult(Exception e) {
+	protected BaseResult(Exception e) {
 		if (e instanceof BusinessException) {
 			BusinessException be = (BusinessException) e;
 			this.code = BaseResultCodeEnum.FAILURE.getCode();
@@ -88,26 +42,25 @@ public class BaseResult implements Serializable{
 		}
 	}
 	
-	private BaseResult(String code, String msg) {
-		super();
+	protected BaseResult(String code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
 
-	private BaseResult(String code, Map<String, Object> data) {
+	protected BaseResult(String code, T data) {
 		super();
 		this.code = code;
 		this.data = data;
 	}
 
-	private BaseResult(String code, String msg, Map<String, Object> data) {
+	protected BaseResult(String code, String msg, T data) {
 		super();
 		this.code = code;
 		this.msg = msg;
 		this.data = data;
 	}
 	
-	public String toJson() {
+	protected String toJson() {
 		JacksonUtil instance = JacksonUtil.getInstance();
 		try {
 			return instance.object2Json(this);
@@ -122,82 +75,6 @@ public class BaseResult implements Serializable{
 		return "{\"code\":\"" + this.code + "\", \"msg\":\"" + this.msg + "\"}";
 	}
 	
-	public static final BaseResult success() {
-		return new BaseResult(BaseResultCodeEnum.SUCCESS.getCode(), "成功");
-	}
-	
-	public static final BaseResult success(String msg) {
-		return new BaseResult(BaseResultCodeEnum.SUCCESS.getCode(), msg);
-	}
-	
-	public static final BaseResult success(String msg, Map<String, Object> data) {
-		return new BaseResult(BaseResultCodeEnum.SUCCESS.getCode(), msg, data);
-	}
-	
-	public static final BaseResult successData(Map<String, Object> data) {
-		return new BaseResult(BaseResultCodeEnum.SUCCESS.getCode(), data);
-	}
-	
-	public static final String successJson() {
-		return success().toJson();
-	}
-	
-	public static final String successDataJson(Map<String, Object> data) {
-		return successData(data).toJson();
-	}
-	
-	public static final String successJson(String msg) {
-		return success(msg).toJson();
-	}
-	
-	public static final String successJson(String msg, Map<String, Object> data) {
-		return success(msg, data).toJson();
-	}
-	
-	public static final BaseResult failure() {
-		return new BaseResult(BaseResultCodeEnum.FAILURE.getCode(), "失败");
-	}
-	
-	public static final BaseResult failure(String msg) {
-		return new BaseResult(BaseResultCodeEnum.FAILURE.getCode(), msg);
-	}
-	
-	public static final BaseResult failure(String msg, Map<String, Object> data) {
-		return new BaseResult(BaseResultCodeEnum.FAILURE.getCode(), msg, data);
-	}
-	
-	public static final BaseResult failure(BusinessException e) {
-		return new BaseResult(BaseResultCodeEnum.FAILURE.getCode(), e.getBusinessMsg());
-	}
-	
-	public static final String failureJson() {
-		return failure().toJson();
-	}
-	
-	public static final String failureJson(String msg) {
-		return failure(msg).toJson();
-	}
-	
-	public static final String failureJson(String msg, Map<String, Object> data) {
-		return failure(msg, data).toJson();
-	}
-	
-	public static final BaseResult error() {
-		return new BaseResult(BaseResultCodeEnum.ERROR.getCode(), "");
-	}
-	
-	public static final BaseResult error(String msg) {
-		return new BaseResult(BaseResultCodeEnum.ERROR.getCode(), msg);
-	}
-	
-	public static final String errorJson() {
-		return error().toJson();
-	}
-	
-	public static final String errorJson(String msg) {
-		return error(msg).toJson();
-	}
-
 	public String getMsg() {
 		return msg;
 	}
@@ -206,11 +83,11 @@ public class BaseResult implements Serializable{
 		this.msg = msg;
 	}
 
-	public Map<String, Object> getData() {
+	public T getData() {
 		return data;
 	}
 
-	public void setData(Map<String, Object> data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 
@@ -224,11 +101,6 @@ public class BaseResult implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(BaseResult.successJson());
-		System.out.println(BaseResult.success().toString());
 	}
 	
 }

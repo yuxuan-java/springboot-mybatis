@@ -1,7 +1,5 @@
 package org.spring.springboot.controller;
 
-import static org.spring.springboot.base.BaseResult.success;
-
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -56,7 +54,7 @@ public class RedisController extends BaseController {
 	
 	@ApiOperation("设置redis中String类型的值")
 	@RequestMapping(value = "/setString", method = RequestMethod.POST)
-	public BaseResult setString(@ApiParam("key for redis string") @RequestParam("key") String key, 
+	public BaseResult<?> setString(@ApiParam("key for redis string") @RequestParam("key") String key, 
 			@ApiParam("value for redis string") @RequestParam("value") String value) {
 		redisService.setString(key, value);
 		return success();
@@ -71,7 +69,7 @@ public class RedisController extends BaseController {
 	
 	@ApiOperation("设置redis中Hash结构的值")
 	@RequestMapping(value = "/setHash", method = RequestMethod.POST)
-	public BaseResult setHash(@ApiParam("key for redis hash") @RequestParam("key") String key, 
+	public BaseResult<?> setHash(@ApiParam("key for redis hash") @RequestParam("key") String key, 
 			@ApiParam("entry map json for redis hash") @RequestParam("json") String json) {
 		JacksonUtil jackson = JacksonUtil.getInstance();
 		try {
